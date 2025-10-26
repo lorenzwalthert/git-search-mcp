@@ -34,6 +34,11 @@ async def handle_list_tools() -> list[Tool]:
                         "description": "File extensions to search in (defaults to .py files only)",
                         "default": [".py"],
                     },
+                    "max_chars": {
+                        "type": "integer",
+                        "description": "Maximum character limit of return value (default 1000)",
+                        "default": 1000,
+                    },
                 },
                 "required": ["regex"],
             },
@@ -59,6 +64,11 @@ async def handle_list_tools() -> list[Tool]:
                         "description": "File extensions to search in (defaults to .py files only)",
                         "default": [".py"],
                     },
+                    "max_chars": {
+                        "type": "integer",
+                        "description": "Maximum character limit of return value (default 1000)",
+                        "default": 1000,
+                    },
                 },
                 "required": ["regex"],
             },
@@ -80,6 +90,7 @@ async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_extensions = arguments.get("file_extensions", [".py"])
+    max_chars = arguments.get("max_chars", 1000)
 
     try:
         repo = git.Repo(repo_path)
@@ -121,7 +132,7 @@ async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent
                     result += item.diff.decode("utf-8", errors="ignore")
             result += "-" * 80 + "\n\n"
 
-        return [TextContent(type="text", text=result)]
+        return [TextContent(type="text", text=result[:max_chars])]
 
     except Exception as e:
         return [TextContent(type="text", text=f"Error: {str(e)}")]
@@ -131,6 +142,7 @@ async def search_git_diff_by_content(arguments: dict[str, Any]) -> list[TextCont
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_extensions = arguments.get("file_extensions", [".py"])
+    max_chars = arguments.get("max_chars", 1000)
 
     try:
         repo = git.Repo(repo_path)
@@ -174,7 +186,7 @@ async def search_git_diff_by_content(arguments: dict[str, Any]) -> list[TextCont
                     result += item.diff.decode("utf-8", errors="ignore")
             result += "-" * 80 + "\n\n"
 
-        return [TextContent(type="text", text=result)]
+        return [TextContent(type="text", text=result[:max_chars])]
 
     except Exception as e:
         return [TextContent(type="text", text=f"Error: {str(e)}")]
