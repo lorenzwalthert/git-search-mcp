@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-git-search-mcp = "git_search_mcp.server:main"
+git-search-mcp = "git_search_mcp.server:cli"
 
 [tool.uv]
 dev-dependencies = [
