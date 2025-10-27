@@ -15,7 +15,7 @@ app = Server("git-search-mcp")
 async def handle_list_tools() -> list[Tool]:
     return [
         Tool(
-            name="search_git_diffs_by_msg",
+            name="git_diffs_by_msg",
             description="Search last 5 git commit diffs matching a regex pattern",
             inputSchema={
                 "type": "object",
@@ -44,7 +44,7 @@ async def handle_list_tools() -> list[Tool]:
             },
         ),
         Tool(
-            name="search_git_diff_by_content",
+            name="git_diff_by_content",
             description="Search last 5 commits where diff content matches regex using git log -G",
             inputSchema={
                 "type": "object",
@@ -77,15 +77,15 @@ async def handle_list_tools() -> list[Tool]:
 
 @app.call_tool()
 async def handle_call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
-    if name == "search_git_diffs_by_msg":
-        return await search_git_diffs_by_msg(arguments)
-    elif name == "search_git_diff_by_content":
-        return await search_git_diff_by_content(arguments)
+    if name == "git_diffs_by_msg":
+        return await git_diffs_by_msg(arguments)
+    elif name == "git_diff_by_content":
+        return await git_diff_by_content(arguments)
     else:
         raise ValueError(f"Unknown tool: {name}")
 
 
-async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent]:
+async def git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_glob = arguments.get("file_glob", "**/*.py")
@@ -134,7 +134,7 @@ async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent
         return [TextContent(type="text", text=f"Error: {str(e)}")]
 
 
-async def search_git_diff_by_content(arguments: dict[str, Any]) -> list[TextContent]:
+async def git_diff_by_content(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_glob = arguments.get("file_glob", "**/*.py")

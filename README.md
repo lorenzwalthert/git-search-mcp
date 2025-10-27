@@ -1,6 +1,6 @@
 # Git Search MCP Server
 
-MCP server that exposes a tool to search git commit diffs using regex patterns.
+MCP server to find relevant git diffs.
 
 ## Installation
 
@@ -15,10 +15,14 @@ Run the server:
 uv run git-search-mcp
 ```
 
-The server exposes one tool:
-- `search_git_diffs`: Takes a regex pattern and returns the last 5 commits with diffs matching that pattern
+The server exposes two tools:
+- `git_diffs_by_msg`: Returns last 5 git commit diffs matching a regex pattern in commit messages.
+- `git_diff_by_content`: Returns last 5 commits where diff content matches regex using git log -G.
 
 ## Tool Parameters
 
-- `regex` (required): Regex pattern to search in commit diffs
+### Both tools support:
+- `regex` (required): Regex pattern to search
 - `repo_path` (optional): Path to git repository (defaults to current directory)
+- `file_glob` (optional): Glob pattern for files to search in (default **/*.py)
+- `max_chars` (optional): Maximum character limit of return value (default 1000)

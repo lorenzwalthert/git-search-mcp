@@ -5,7 +5,7 @@ from git_search_mcp.server import handle_call_tool
 
 async def debug():
     result = await handle_call_tool(
-        name="search_git_diffs_by_msg",
+        name="git_diffs_by_msg",
         arguments={
             "regex": "feat.*parameter|add.*parameter|parameter.*feat|new.*param",
             "file_extensions": [
