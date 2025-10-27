@@ -20,7 +20,7 @@ This information can ehance agent behaviour in learning from human committers to
 
 First install `uv`, then you can add the server to your mcp config, e.g. for AWS Q:
 ```json
-# file in ~/.aws/amazonq/mcp.json
+// file in ~/.aws/amazonq/mcp.json
 {
   "mcpServers": {
     "git-search": {
@@ -44,9 +44,11 @@ In the above sample, you might need to provide the full path to the `uv` executa
 
 The server exposes two tools:
 - `git_diffs_by_msg`: Returns last 5 git commit diffs matching a regex pattern in commit messages.
-- `git_diff_by_content`: Returns last 5 commit diffs where diff content matches regex using git log -G.
+- `git_diff_by_content`: Returns last 5 commit diffs where diff content matches regex using `git log -G`.
 
 in AWS Q for example, you can transparently see tool invocation: 
+
+![alt text](fig/q-1.png)
 
 ## Tool Parameters
 
