@@ -1,5 +1,6 @@
 import re
 import asyncio
+from pathlib import Path
 from typing import Any, Sequence
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
@@ -28,11 +29,10 @@ async def handle_list_tools() -> list[Tool]:
                         "description": "Path to git repository (defaults to current directory)",
                         "default": ".",
                     },
-                    "file_extensions": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "File extensions to search in (defaults to .py files only)",
-                        "default": [".py"],
+                    "file_glob": {
+                        "type": "string",
+                        "description": "Glob pattern for files to search in (default **/*.py). Wildcard globs matching many files can be helpful in early phase of search, while later on, when relevant files are identified, the search can be narrowed to certain files only.",
+                        "default": "**/*.py",
                     },
                     "max_chars": {
                         "type": "integer",
@@ -58,11 +58,10 @@ async def handle_list_tools() -> list[Tool]:
                         "description": "Path to git repository (defaults to current directory)",
                         "default": ".",
                     },
-                    "file_extensions": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "File extensions to search in (defaults to .py files only)",
-                        "default": [".py"],
+                    "file_glob": {
+                        "type": "string",
+                        "description": "Glob pattern for files to search in (default **/*.py). Wildcard globs matching many files can be helpful in early phase of search, while later on, when relevant files are identified, the search can be narrowed to certain files only.",
+                        "default": "**/*.py",
                     },
                     "max_chars": {
                         "type": "integer",
@@ -89,7 +88,7 @@ async def handle_call_tool(name: str, arguments: dict[str, Any]) -> list[TextCon
 async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
-    file_extensions = arguments.get("file_extensions", [".py"])
+    file_glob = arguments.get("file_glob", "**/*.py")
     max_chars = arguments.get("max_chars", 1000)
 
     try:
@@ -122,12 +121,9 @@ async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent
             )
             result += "Diff:\n"
             for item in diff:
-                if item.diff and any(
-                    item.a_path
-                    and item.a_path.endswith(ext)
-                    or item.b_path
-                    and item.b_path.endswith(ext)
-                    for ext in file_extensions
+                if item.diff and (
+                    (item.a_path and Path(item.a_path).match(file_glob))
+                    or (item.b_path and Path(item.b_path).match(file_glob))
                 ):
                     result += item.diff.decode("utf-8", errors="ignore")
             result += "-" * 80 + "\n\n"
@@ -141,7 +137,7 @@ async def search_git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent
 async def search_git_diff_by_content(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
-    file_extensions = arguments.get("file_extensions", [".py"])
+    file_glob = arguments.get("file_glob", "**/*.py")
     max_chars = arguments.get("max_chars", 1000)
 
     try:
@@ -176,12 +172,9 @@ async def search_git_diff_by_content(arguments: dict[str, Any]) -> list[TextCont
             )
             result += "Diff:\n"
             for item in diff:
-                if item.diff and any(
-                    item.a_path
-                    and item.a_path.endswith(ext)
-                    or item.b_path
-                    and item.b_path.endswith(ext)
-                    for ext in file_extensions
+                if item.diff and (
+                    (item.a_path and Path(item.a_path).match(file_glob))
+                    or (item.b_path and Path(item.b_path).match(file_glob))
                 ):
                     result += item.diff.decode("utf-8", errors="ignore")
             result += "-" * 80 + "\n\n"
