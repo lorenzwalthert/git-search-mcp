@@ -1,9 +1,7 @@
-import re
 import asyncio
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any
 from mcp.server import Server
-from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent
 import git
 
