@@ -16,7 +16,7 @@ The server is useful to extract relevant information for code changes that often
 
 This information can ehance agent behaviour in learning from human committers to perform similar tasks.
 
-## Usage
+## Installation
 
 First install `uv`, then you can add the server to your mcp config, e.g. for AWS Q:
 ```json
@@ -26,7 +26,7 @@ First install `uv`, then you can add the server to your mcp config, e.g. for AWS
     "git-search": {
       "command": "uvx",
       "args": [
-        "git+https://github.com/lorenzwalthert/git-search-mpc.git",
+        "git+https://github.com/lorenzwalthert/git-search-mcp.git",
         "git-search-mcp"
       ],
       "env": {
@@ -45,6 +45,8 @@ In the above sample, you might need to provide the full path to the `uv` executa
 The server exposes two tools:
 - `git_diffs_by_msg`: Returns last 5 git commit diffs matching a regex pattern in commit messages.
 - `git_diff_by_content`: Returns last 5 commit diffs where diff content matches regex using `git log -G`.
+
+# Usage
 
 in AWS Q for example, you can transparently see tool invocation: 
 
