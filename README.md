@@ -1,10 +1,10 @@
 # Git Search MCP Server
 
 ***
-This is an experimental project.
+This is an experimental project. No warranty.
 ***
 
-MCP server to find relevant git diffs. In contrast to plain file analysis, this can 
+Read-only MCP server to find relevant git diffs. In contrast to plain file analysis, this can 
 * establish a connection between commit messages and diffs for relevant regular expressions. 
 * reduce noise from the context window by focussing on a diff instead of whole files.
 
@@ -33,7 +33,9 @@ First install `uv`, then you can add the server to your mcp config, e.g. for AWS
         "": ""
       },
       "timeout": 60000,
-      "disabled": false
+      "disabled": false,
+      // read only can't destroy anything
+      "toolUsage": "alwaysAllow"
     }
   }
 }
