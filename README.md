@@ -18,30 +18,9 @@ This information can ehance agent behaviour in learning from human committers to
 
 ## Installation
 
-First install `uv`, then you can add the server to your mcp config, e.g. for AWS Q:
-```json
-// file in ~/.aws/amazonq/mcp.json
-{
-  "mcpServers": {
-    "git-search": {
-      "command": "uvx",
-      "args": [
-        "git+https://github.com/lorenzwalthert/git-search-mcp.git",
-        "git-search-mcp"
-      ],
-      "env": {
-        "": ""
-      },
-      "timeout": 60000,
-      "disabled": false,
-      // read only can't destroy anything
-      "toolUsage": "alwaysAllow"
-    }
-  }
-}
-```
-
-In the above sample, you might need to provide the full path to the `uv` executable in `command`, which you can find with `which uv` in your termninal.
+First install `uv`, then you can add the server to your mcp config with the following setting: 
+* command: `uvx`
+* args: `git+https://github.com/lorenzwalthert/git-search-mcp.git` and `git-search-mcp`
 
 
 The server exposes two tools:
