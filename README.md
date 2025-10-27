@@ -1,5 +1,6 @@
 # Git Search MCP Server
 
+***
 This is an experimental project.
 ***
 
@@ -44,6 +45,8 @@ In the above sample, you might need to provide the full path to the `uv` executa
 The server exposes two tools:
 - `git_diffs_by_msg`: Returns last 5 git commit diffs matching a regex pattern in commit messages.
 - `git_diff_by_content`: Returns last 5 commit diffs where diff content matches regex using git log -G.
+
+in AWS Q for example, you can transparently see tool invocation: 
 
 ## Tool Parameters
 
