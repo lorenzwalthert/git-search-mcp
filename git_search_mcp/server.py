@@ -34,8 +34,8 @@ async def handle_list_tools() -> list[Tool]:
                     },
                     "max_chars": {
                         "type": "integer",
-                        "description": "Maximum character limit of return value (default 1000)",
-                        "default": 1000,
+                        "description": "Maximum character limit of return value (default 3000)",
+                        "default": 3000,
                     },
                 },
                 "required": ["regex"],
@@ -63,8 +63,8 @@ async def handle_list_tools() -> list[Tool]:
                     },
                     "max_chars": {
                         "type": "integer",
-                        "description": "Maximum character limit of return value (default 1000)",
-                        "default": 1000,
+                        "description": "Maximum character limit of return value (default 3000)",
+                        "default": 3000,
                     },
                 },
                 "required": ["regex"],
@@ -87,7 +87,7 @@ async def git_diffs_by_msg(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_glob = arguments.get("file_glob", "**/*.py")
-    max_chars = arguments.get("max_chars", 1000)
+    max_chars = arguments.get("max_chars", 3000)
 
     try:
         repo = git.Repo(repo_path)
@@ -136,7 +136,7 @@ async def git_diff_by_content(arguments: dict[str, Any]) -> list[TextContent]:
     regex_pattern = arguments["regex"]
     repo_path = arguments.get("repo_path", ".")
     file_glob = arguments.get("file_glob", "**/*.py")
-    max_chars = arguments.get("max_chars", 1000)
+    max_chars = arguments.get("max_chars", 3000)
 
     try:
         repo = git.Repo(repo_path)

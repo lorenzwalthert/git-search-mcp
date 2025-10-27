@@ -1,12 +1,21 @@
 # Git Search MCP Server
 
-MCP server to find relevant git diffs.
+MCP server to find relevant git diffs. In contrast to plain file analysis, this can establish a connection between commit messages and diffs for relevant regular expressions. 
+
+The server works well for code changes that often touch similar places in the code base and contain similar commit messages, such as:
+
+- introducing new boilerplate code such as new parameter that have to be propagated through a system.
+- config changes that always happen in the same files.
+
+This is an experimental project.
 
 ## Installation
 
 ```bash
 uv sync
 ```
+
+Only source installation is supported.
 
 ## Usage
 
@@ -25,4 +34,4 @@ The server exposes two tools:
 - `regex` (required): Regex pattern to search
 - `repo_path` (optional): Path to git repository (defaults to current directory)
 - `file_glob` (optional): Glob pattern for files to search in (default **/*.py)
-- `max_chars` (optional): Maximum character limit of return value (default 1000)
+- `max_chars` (optional): Maximum character limit of return value (default 3000)
